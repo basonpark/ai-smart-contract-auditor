@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import ContractSubmissionForm from "@/components/audit/ContractSubmissionForm";
 import AuditResultsDisplay from "@/components/audit/AuditResultsDisplay";
 import { submitAuditRequest } from "@/services/audit.service";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"; // Import Card components
+import { HeroSection } from "@/components/blocks/hero-section"; // Import the new Hero Section
+import { Button } from "@/components/ui/button"; // Ensure Button is imported if used in actions
 
 export default function Home() {
   // State for loading indicator during API call
@@ -36,26 +39,54 @@ export default function Home() {
     }
   };
 
-  return (
-    <div className="container mx-auto px-4 py-8 md:py-12">
-      <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-800">
-        AI-Powered Smart Contract Auditor
-      </h1>
-      <p className="text-center text-gray-600 mb-8 md:mb-12 text-base md:text-lg">
-        Submit your Solidity smart contract code for automated security
-        analysis.
-      </p>
+  // Define actions according to HeroAction interface
+  const heroActions = [
+    {
+      text: "Start Auditing",
+      href: "#audit-form-card", // Use fragment identifier for scrolling
+      variant: "default" as const, // Explicitly type variant
+    },
+    {
+      text: "Learn More",
+      href: "#", // Placeholder href
+      variant: "default" as const, // Changed from "outline" to satisfy HeroAction type
+    },
+  ];
 
-      {/* Contract Submission Form Card */}
-      <div className="max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-lg border border-gray-200">
-        <ContractSubmissionForm
-          onSubmit={handleAuditSubmit}
-          isLoading={isLoading}
-        />
+  // Define placeholder image paths (replace with actual image paths if available)
+  const heroImage = {
+    light: "/placeholder-light.svg", // Example placeholder
+    dark: "/placeholder-dark.svg", // Example placeholder
+    alt: "Smart Contract Security Illustration",
+  };
+
+  return (
+    <div className="flex flex-col items-center w-full">
+      <HeroSection
+        title="Secure Your Smart Contracts"
+        description="Utilize AI-powered analysis and industry-standard tools like Slither to automatically detect vulnerabilities and ensure the security of your Solidity code."
+        actions={heroActions}
+        image={heroImage} // Pass the image object
+      />
+
+      <div
+        id="audit-form-card"
+        className="container relative z-10 mx-auto px-4 w-full max-w-3xl -mt-16 md:-mt-20 mb-12 md:mb-16 scroll-mt-20"
+      >
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle>Submit Contract for Audit</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ContractSubmissionForm
+              onSubmit={handleAuditSubmit}
+              isLoading={isLoading}
+            />
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Display Area for Audit Results or Loading/Error States */}
-      <div className="max-w-4xl mx-auto mt-10 md:mt-12">
+      <div className="container mx-auto px-4 w-full max-w-4xl mb-16">
         <AuditResultsDisplay
           results={auditResults}
           isLoading={isLoading}
