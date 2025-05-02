@@ -105,7 +105,7 @@ export function AuditFirmsSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
           >
-            <Card className="border-white/5 glass h-full flex flex-col gradient-border">
+            <Card className="border-white/5 glass h-full flex flex-col gradient-border bg-gradient-to-br from-slate-700/70 to-slate-900/70">
               <div className="p-6 flex-1">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-12 h-12 rounded-full bg-black/40 flex items-center justify-center overflow-hidden">

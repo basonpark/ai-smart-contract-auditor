@@ -42,7 +42,7 @@ export function DetailedSampleReport() {
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
-      <Card className="border-white/5 glass shadow-glow overflow-hidden">
+      <Card className="border-white/5 glass shadow-glow overflow-hidden bg-gradient-to-br from-slate-900/70 to-slate-900 ">
         <CardContent className="p-0">
           <div className="border-b border-white/5">
             <div className="p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">

@@ -1,27 +1,33 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Card, CardContent } from "@/components/ui/card"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { AlertTriangle, AlertCircle, Info, CheckCircle2, Search } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  AlertTriangle,
+  AlertCircle,
+  Info,
+  CheckCircle2,
+  Search,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Vulnerability {
-  id: string
-  title: string
-  severity: "critical" | "high" | "medium" | "low"
-  description: string
-  example: string
-  remediation: string
-  category: string
+  id: string;
+  title: string;
+  severity: "critical" | "high" | "medium" | "low";
+  description: string;
+  example: string;
+  remediation: string;
+  category: string;
 }
 
 export function VulnerabilitiesReference() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [activeTab, setActiveTab] = useState("all")
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeTab, setActiveTab] = useState("all");
 
   const vulnerabilities: Vulnerability[] = [
     {
@@ -50,7 +56,8 @@ export function VulnerabilitiesReference() {
     require(tx.origin == owner);
     owner = newOwner;
 }`,
-      remediation: "Use msg.sender instead of tx.origin for authorization checks.",
+      remediation:
+        "Use msg.sender instead of tx.origin for authorization checks.",
       category: "Security",
     },
     {
@@ -72,11 +79,13 @@ function transfer(address to, uint256 amount) external {
       id: "SWC-105",
       title: "Unprotected Ether Withdrawal",
       severity: "high",
-      description: "Functions that allow anyone to withdraw Ether from the contract without proper access controls.",
+      description:
+        "Functions that allow anyone to withdraw Ether from the contract without proper access controls.",
       example: `function withdrawFunds() public {
     msg.sender.transfer(address(this).balance);
 }`,
-      remediation: "Add proper access controls to withdrawal functions using modifiers like onlyOwner.",
+      remediation:
+        "Add proper access controls to withdrawal functions using modifiers like onlyOwner.",
       category: "Security",
     },
     {
@@ -105,7 +114,8 @@ function transfer(address to, uint256 amount) external {
     msg.sender.call{value: amount}("");
     balances[msg.sender] -= amount;
 }`,
-      remediation: "Always check the return value of low-level calls and handle failures appropriately.",
+      remediation:
+        "Always check the return value of low-level calls and handle failures appropriately.",
       category: "Security",
     },
     {
@@ -119,21 +129,24 @@ function transfer(address to, uint256 amount) external {
 contract FloatingPragma {
     // Contract code
 }`,
-      remediation: "Lock the pragma to a specific compiler version, e.g., pragma solidity 0.8.17;",
+      remediation:
+        "Lock the pragma to a specific compiler version, e.g., pragma solidity 0.8.17;",
       category: "Best Practice",
     },
     {
       id: "G-001",
       title: "Unnecessary SLOAD",
       severity: "low",
-      description: "Reading from storage multiple times when it could be cached in memory increases gas costs.",
+      description:
+        "Reading from storage multiple times when it could be cached in memory increases gas costs.",
       example: `function updateValues() public {
     // Each access to state reads from storage
     value1 = value1 + 1;
     value2 = value2 + value1;
     value3 = value3 + value2;
 }`,
-      remediation: "Cache storage variables in memory when accessed multiple times in a function.",
+      remediation:
+        "Cache storage variables in memory when accessed multiple times in a function.",
       category: "Gas Optimization",
     },
     {
@@ -150,51 +163,54 @@ contract FloatingPragma {
       remediation: "Cache array length outside the loop to save gas.",
       category: "Gas Optimization",
     },
-  ]
+  ];
 
   const filteredVulnerabilities = vulnerabilities.filter((vuln) => {
     const matchesSearch =
       vuln.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       vuln.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      vuln.id.toLowerCase().includes(searchQuery.toLowerCase())
+      vuln.id.toLowerCase().includes(searchQuery.toLowerCase());
 
-    if (activeTab === "all") return matchesSearch
-    if (activeTab === "security") return matchesSearch && vuln.category === "Security"
-    if (activeTab === "gas") return matchesSearch && vuln.category === "Gas Optimization"
-    if (activeTab === "best-practices") return matchesSearch && vuln.category === "Best Practice"
+    if (activeTab === "all") return matchesSearch;
+    if (activeTab === "security")
+      return matchesSearch && vuln.category === "Security";
+    if (activeTab === "gas")
+      return matchesSearch && vuln.category === "Gas Optimization";
+    if (activeTab === "best-practices")
+      return matchesSearch && vuln.category === "Best Practice";
 
-    return matchesSearch && vuln.severity === activeTab
-  })
+    return matchesSearch && vuln.severity === activeTab;
+  });
 
   const getSeverityIcon = (severity: string) => {
     switch (severity) {
       case "critical":
-        return <AlertTriangle className="h-5 w-5 text-destructive" />
+        return <AlertTriangle className="h-5 w-5 text-destructive" />;
       case "high":
-        return <AlertCircle className="h-5 w-5 text-orange-500" />
+        return <AlertCircle className="h-5 w-5 text-orange-500" />;
       case "medium":
-        return <Info className="h-5 w-5 text-yellow-500" />
+        return <Info className="h-5 w-5 text-yellow-500" />;
       case "low":
-        return <CheckCircle2 className="h-5 w-5 text-green-500" />
+        return <CheckCircle2 className="h-5 w-5 text-green-500" />;
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   const getSeverityBadge = (severity: string) => {
     switch (severity) {
       case "critical":
-        return <Badge variant="destructive">Critical</Badge>
+        return <Badge variant="destructive">Critical</Badge>;
       case "high":
-        return <Badge className="bg-orange-500">High</Badge>
+        return <Badge className="bg-orange-500">High</Badge>;
       case "medium":
-        return <Badge className="bg-yellow-500">Medium</Badge>
+        return <Badge className="bg-yellow-500">Medium</Badge>;
       case "low":
-        return <Badge className="bg-green-500">Low</Badge>
+        return <Badge className="bg-green-500">Low</Badge>;
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   return (
     <div className="container py-16">
@@ -205,14 +221,16 @@ contract FloatingPragma {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="heading-lg gradient-text mb-4">Common Smart Contract Vulnerabilities</h2>
+        <h2 className="heading-lg gradient-text mb-4">
+          Common Smart Contract Vulnerabilities
+        </h2>
         <p className="body-md text-muted-foreground max-w-2xl mx-auto">
-          A comprehensive reference of common vulnerabilities found in Solidity smart contracts, with examples and
-          remediation strategies.
+          A comprehensive reference of common vulnerabilities found in Solidity
+          smart contracts, with examples and remediation strategies.
         </p>
       </motion.div>
 
-      <Card className="border-white/5 glass shadow-soft">
+      <Card className="border-white/5 glass gradient-border shadow-soft">
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="relative flex-1">
@@ -224,7 +242,11 @@ contract FloatingPragma {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full md:w-auto">
+            <Tabs
+              value={activeTab}
+              onValueChange={setActiveTab}
+              className="w-full md:w-auto"
+            >
               <TabsList className="grid grid-cols-3 md:grid-cols-7">
                 <TabsTrigger value="all">All</TabsTrigger>
                 <TabsTrigger value="critical">Critical</TabsTrigger>
@@ -243,14 +265,22 @@ contract FloatingPragma {
                 filteredVulnerabilities.map((vuln) => (
                   <motion.div
                     key={vuln.id}
-                    className="border border-white/5 rounded-lg overflow-hidden"
+                    className="border border-white/5 rounded-lg overflow-hidden bg-gradient-to-br from-slate-800/70 to-slate-900/70"
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.3 }}
                   >
                     <div
-                      className={`p-4 border-b border-white/5 bg-${vuln.severity === "critical" ? "destructive" : vuln.severity === "high" ? "orange-500" : vuln.severity === "medium" ? "yellow-500" : "green-500"}/10`}
+                      className={`p-4 border-b border-white/5 bg-${
+                        vuln.severity === "critical"
+                          ? "destructive"
+                          : vuln.severity === "high"
+                          ? "orange-500"
+                          : vuln.severity === "medium"
+                          ? "yellow-500"
+                          : "green-500"
+                      }/10`}
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex items-start gap-3">
@@ -258,9 +288,14 @@ contract FloatingPragma {
                           <div>
                             <div className="flex items-center gap-2">
                               <h5 className="font-bold">{vuln.title}</h5>
-                              <span className="text-sm text-muted-foreground">{vuln.id}</span>
+                              <span className="text-sm text-muted-foreground">
+                                {vuln.id}
+                              </span>
                             </div>
-                            <Badge variant="outline" className="mt-1 bg-black/20">
+                            <Badge
+                              variant="outline"
+                              className="mt-1 bg-black/20"
+                            >
                               {vuln.category}
                             </Badge>
                           </div>
@@ -271,17 +306,25 @@ contract FloatingPragma {
                     <div className="p-4">
                       <div className="mb-4">
                         <h6 className="font-medium mb-2">Description</h6>
-                        <p className="text-sm text-muted-foreground">{vuln.description}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {vuln.description}
+                        </p>
                       </div>
                       <div className="mb-4">
-                        <h6 className="font-medium mb-2">Vulnerable Code Example</h6>
+                        <h6 className="font-medium mb-2">
+                          Vulnerable Code Example
+                        </h6>
                         <div className="bg-black/40 rounded-md p-3 text-xs font-mono overflow-auto">
-                          <pre className="text-muted-foreground">{vuln.example}</pre>
+                          <pre className="text-muted-foreground">
+                            {vuln.example}
+                          </pre>
                         </div>
                       </div>
                       <div>
                         <h6 className="font-medium mb-2">Remediation</h6>
-                        <p className="text-sm text-muted-foreground">{vuln.remediation}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {vuln.remediation}
+                        </p>
                       </div>
                     </div>
                   </motion.div>
@@ -289,8 +332,12 @@ contract FloatingPragma {
               ) : (
                 <div className="text-center py-12">
                   <Info className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">No vulnerabilities found</h3>
-                  <p className="text-muted-foreground">Try adjusting your search or filter criteria</p>
+                  <h3 className="text-lg font-medium mb-2">
+                    No vulnerabilities found
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Try adjusting your search or filter criteria
+                  </p>
                 </div>
               )}
             </div>
@@ -298,5 +345,5 @@ contract FloatingPragma {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
