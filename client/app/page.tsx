@@ -67,15 +67,17 @@ export default function Home() {
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
-          <motion.div
-            className="flex items-center gap-2"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Shield className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold">AuditAI</span>
-          </motion.div>
+          <Link href="/" className="flex items-center gap-2">
+            <motion.div
+              className="flex items-center gap-2"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Shield className="h-8 w-8 text-primary" />
+              <span className="text-xl font-bold">AuditAI</span>
+            </motion.div>
+          </Link>
           <motion.nav
             className="hidden md:flex items-center gap-8"
             initial={{ opacity: 0, y: -10 }}
@@ -345,7 +347,7 @@ export default function Home() {
           <div className="container">
             <ScrollReveal>
               <h2 className="heading-lg gradient-text text-center mb-16">
-                Simple, Transparent Pricing
+                Choose Your Ideal Plan
               </h2>
             </ScrollReveal>
             <StaggeredList
@@ -365,7 +367,7 @@ export default function Home() {
                   "SecureScore™ analysis",
                 ]}
                 buttonText="Start Free"
-                buttonLink="/signup"
+                buttonLink="/free-offer"
                 popular={false}
               />
               <PricingCard
@@ -383,7 +385,7 @@ export default function Home() {
                   "API access",
                 ]}
                 buttonText="Upgrade to Pro"
-                buttonLink="/signup/pro"
+                buttonLink="/free-offer"
                 popular={true}
               />
               <PricingCard
@@ -401,13 +403,13 @@ export default function Home() {
                   "Dedicated support",
                 ]}
                 buttonText="Get Team Plan"
-                buttonLink="/signup/team"
+                buttonLink="/free-offer"
                 popular={false}
               />
             </StaggeredList>
             <ScrollReveal delay={0.6}>
               <div className="text-center mt-10">
-                <Link href="/contact">
+                <Link href="/free-offer">
                   <Button variant="outline">
                     Contact us for Enterprise options
                   </Button>
@@ -451,9 +453,7 @@ export default function Home() {
             >
               Contact
             </Link>
-            <div>
-              © {new Date().getFullYear()} AuditAI. All rights reserved.
-            </div>
+            <div>{new Date().getFullYear()} AuditAI. All rights reserved.</div>
           </div>
         </div>
       </footer>

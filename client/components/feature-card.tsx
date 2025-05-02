@@ -1,20 +1,30 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import { motion } from "framer-motion"
-import type { ReactNode } from "react"
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import type { ReactNode } from "react";
 
 interface FeatureCardProps {
-  icon: ReactNode
-  title: string
-  description: string
-  className?: string
+  icon: ReactNode;
+  title: string;
+  description: string;
+  className?: string;
 }
 
-export function FeatureCard({ icon, title, description, className }: FeatureCardProps) {
+export function FeatureCard({
+  icon,
+  title,
+  description,
+  className,
+}: FeatureCardProps) {
   return (
     <motion.div
-      className={cn("relative p-8 rounded-xl glass floating-card", "border border-white/5 shadow-soft", className)}
+      className={cn(
+        "relative p-8 rounded-xl glass floating-card",
+        "bg-gradient-to-br shadow-soft from-pink-600/10 to-pink-400/10",
+        "border border-white/5 shadow-soft",
+        className
+      )}
       whileHover={{
         y: -10,
         boxShadow: "0 20px 40px -5px rgba(139, 92, 246, 0.3)",
@@ -29,5 +39,5 @@ export function FeatureCard({ icon, title, description, className }: FeatureCard
       <h3 className="text-xl font-bold mb-3">{title}</h3>
       <p className="text-muted-foreground">{description}</p>
     </motion.div>
-  )
+  );
 }

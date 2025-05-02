@@ -4,6 +4,7 @@ import { Satisfy as Satoshi } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
+import LenisScroller from "@/components/lenis-scroller";
 
 const fontSatoshi = Satoshi({
   subsets: ["latin"],
@@ -36,6 +37,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <LenisScroller />
           {children}
         </ThemeProvider>
       </body>
